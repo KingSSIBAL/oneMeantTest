@@ -250,7 +250,8 @@ oneMeanTTest <- function(x, mu, ha, alpha, data, plot = TRUE) {
 #'
 #' @param x An object of class "oneMeanTTest".
 #' @param ... Additional arguments (ignored).
-#' @export
+#'
+#' @keywords internal
 print.oneMeanTTest <- function(x, ...) {
   cat("\n")
   cat("    One-Sample t-test\n")
