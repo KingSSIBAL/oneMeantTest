@@ -1,20 +1,20 @@
 ---
-title: "Getting Started with OneMeanTTest"
+title: "Getting Started with OneMeanDream"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started with OneMeanTTest}
+  %\VignetteIndexEntry{Getting Started with OneMeanDream}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-library(OneMeanTTest)
+library(OneMeanDream)
 ```
 
 ## Introduction
 
-OneMeanTTest provides enhanced one-sample t-tests using Wallace and Hastings approximations.
+OneMeanDream provides enhanced one-sample t-tests using Wallace and Hastings approximations.
 
 ## Basic Usage
 
@@ -55,14 +55,14 @@ The function returns:
 **Build vignettes:**
 ```r
 devtools::build_vignettes()
-browseVignettes("OneMeanTTest")  # View locally
+browseVignettes("OneMeanDream")  # View locally
 ```
 
 ## **🎯 QUICK START: Complete Setup**
 
 ```r
 # 1. Add package documentation
-# Create R/OneMeanTTest-package.R (code above)
+# Create R/OneMeanDream-package.R (code above)
 
 # 2. Build everything
 devtools::document()
@@ -70,10 +70,10 @@ devtools::build_vignettes()
 devtools::install(build_vignettes = TRUE)
 
 # 3. Test searchable help
-library(OneMeanTTest)
-?OneMeanTTest              # Package overview
+library(OneMeanDream)
+?OneMeanDream              # Package overview
 ?oneMeanTTest              # Function help
-browseVignettes("OneMeanTTest")  # Tutorial
+browseVignettes("OneMeanDream")  # Tutorial
 
 # 4. (OPTIONAL) Create website
 pkgdown::build_site()
@@ -85,7 +85,7 @@ pkgdown::build_site()
 | Feature | Command | What You Get |
 |---------|---------|--------------|
 | **Function help** | `?oneMeanTTest` | Full parameter docs, examples |
-| **Package help** | `?OneMeanTTest-package` | Overview, all functions |
+| **Package help** | `?OneMeanDream-package` | Overview, all functions |
 | **Search** | `help.search("Wallace")` | Find by keyword |
 | **Tutorial** | `browseVignettes()` | Step-by-step guide |
 | **Website** | `pkgdown::build_site()` | Full searchable site |
