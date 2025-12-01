@@ -11,14 +11,14 @@ Authors@R:
       person("Keano", "Pastrana", role = "aut"),
       person("Matt Andrei", "Miclat", role = "aut"),
       person("Mica", "Gonzales", role = "aut"),
-      person("Reijel", "Agub", role = "aut"),
-      person("Zan Eros ", "Policarpio", role = "aut")
+      person("Zan Eros", "Policarpio", role = "aut"),
+      person("Reijel", "Agub", email = "rcagub@up.edu.ph", role = c("aut", "cre"))
     )
 Description: Performs one-sample t-tests using Wallace critical value 
     approximation and Hastings p-value approximation. Includes comprehensive 
     assumption checks (normality via Shapiro-Wilk, outlier detection) and 
     diagnostic plots.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
