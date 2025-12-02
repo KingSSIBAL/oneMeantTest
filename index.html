@@ -56,8 +56,200 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-Performs one-sample t-tests using Wallace critical value approximation and Hastings p-value approximation. Includes comprehensive assumption checks (normality via Shapiro-Wilk, outlier detection) and diagnostic plots.
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="onemeandream">OneMeanDream<a class="anchor" aria-label="anchor" href="#onemeandream"></a>
+</h1></div>
+<!-- badges: start -->
+
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p><strong>OneMeanDream</strong> provides enhanced one-sample t-test functionality with advanced statistical approximations and comprehensive diagnostics:</p>
+<ul>
+<li>📊 <strong>Wallace Critical Value Approximation</strong> for accurate hypothesis testing</li>
+<li>🔬 <strong>Hastings P-Value Approximation</strong> for computational efficiency<br>
+</li>
+<li>✅ <strong>Comprehensive Assumption Checking</strong> (Shapiro-Wilk normality test, outlier detection)</li>
+<li>📈 <strong>Diagnostic Plots</strong> (Q-Q plot, histogram with normal curve overlay, boxplot)</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the development version of OneMeanDream from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"KingSSIBAL/OneMeanDream"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="quick-example">Quick Example<a class="anchor" aria-label="anchor" href="#quick-example"></a>
+</h2>
+<p>Here’s a basic example showing how to perform a one-sample t-test:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kingssibal.github.io/OneMeanDream/">OneMeanDream</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create sample data: test if earnings are significantly below $75k</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">181</span><span class="op">)</span></span>
+<span><span class="va">earnings_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  Earnings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span>, mean <span class="op">=</span> <span class="fl">65</span>, sd <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Perform one-sample t-test</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/oneMeanTTest.html">oneMeanTTest</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="st">"Earnings"</span>, </span>
+<span>  mu <span class="op">=</span> <span class="fl">75</span>, </span>
+<span>  ha <span class="op">=</span> <span class="st">"less"</span>, </span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">earnings_data</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-1.png" width="100%"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     One-Sample t-test</span></span>
+<span><span class="co">#&gt; ------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Variable:    Earnings </span></span>
+<span><span class="co">#&gt; n:           50 </span></span>
+<span><span class="co">#&gt; Mean:        65.82 </span></span>
+<span><span class="co">#&gt; SD:          21.5792 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Null Hyp:    mu = 75 </span></span>
+<span><span class="co">#&gt; Alt Hyp:     mu &lt; 75 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------</span></span>
+<span><span class="co">#&gt; ASSUMPTION CHECKS:</span></span>
+<span><span class="co">#&gt; 1. Normality (Shapiro-Wilk): SATISFIED (p = 0.905 )</span></span>
+<span><span class="co">#&gt; 2. Outliers (1.5 IQR Rule):  SATISFIED (0 outliers detected)</span></span>
+<span><span class="co">#&gt; ------------------------------------------------------</span></span>
+<span><span class="co">#&gt; t-stat:      -3.0081 </span></span>
+<span><span class="co">#&gt; df:          49 </span></span>
+<span><span class="co">#&gt; Crit Val:    -1.6765 </span></span>
+<span><span class="co">#&gt; P-value:     0.001543 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------</span></span>
+<span><span class="co">#&gt; 95% CI:      [ -Inf ,  70.9364 ]</span></span>
+<span><span class="co">#&gt; Decision:    REJECT the null hypothesis (Ho) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Interpretation:</span></span>
+<span><span class="co">#&gt; At alpha = 0.05, we REJECT the null hypothesis (Ho). The sample mean (65.82) is significantly less than 75.</span></span>
+<span><span class="co">#&gt; We are 95% confident that the true population mean is less than 70.9364.</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
+</h2>
+<div class="section level3">
+<h3 id="wallace-critical-value-approximation">Wallace Critical Value Approximation<a class="anchor" aria-label="anchor" href="#wallace-critical-value-approximation"></a>
+</h3>
+<p>Uses the Wallace approximation formula for converting z-values to t-distribution critical values:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>α</mi></msub><mo>=</mo><msqrt><mrow><mi>ν</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>e</mi><mrow><mi>c</mi><mo>⋅</mo><msubsup><mi>z</mi><mi>α</mi><mn>2</mn></msubsup><mi>/</mi><mi>ν</mi></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msqrt></mrow><annotation encoding="application/x-tex">t_\alpha = \sqrt{\nu \left(e^{c \cdot z_\alpha^2 / \nu} - 1\right)}</annotation></semantics></math></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mn>8</mn><mi>ν</mi><mo>+</mo><mn>3</mn></mrow><mrow><mn>8</mn><mi>ν</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">c = \left(\frac{8\nu+3}{8\nu+1}\right)^2</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ν</mi><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\nu = n-1</annotation></semantics></math> (degrees of freedom).</p>
+</div>
+<div class="section level3">
+<h3 id="hastings-p-value-approximation">Hastings P-Value Approximation<a class="anchor" aria-label="anchor" href="#hastings-p-value-approximation"></a>
+</h3>
+<p>Implements an efficient 4-term Hastings approximation for computing p-values without relying on built-in distribution functions, ensuring computational efficiency and numerical stability.</p>
+</div>
+<div class="section level3">
+<h3 id="automatic-assumption-checks">Automatic Assumption Checks<a class="anchor" aria-label="anchor" href="#automatic-assumption-checks"></a>
+</h3>
+<p>The function automatically performs:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Normality Testing</strong>: Shapiro-Wilk test with clear pass/fail indication</li>
+<li>
+<strong>Outlier Detection</strong>: Uses 1.5 × IQR rule to identify potential outliers</li>
+<li>
+<strong>Visual Diagnostics</strong>: Generates three diagnostic plots:
+<ul>
+<li>Q-Q plot for normality assessment</li>
+<li>Histogram with overlaid normal curve</li>
+<li>Boxplot highlighting outliers</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div class="section level2">
+<h2 id="function-arguments">Function Arguments<a class="anchor" aria-label="anchor" href="#function-arguments"></a>
+</h2>
+<ul>
+<li>
+<code>x</code>: Column name (character string) containing numeric data</li>
+<li>
+<code>mu</code>: Hypothesized population mean under null hypothesis</li>
+<li>
+<code>ha</code>: Alternative hypothesis - <code>"less"</code>, <code>"greater"</code>, or <code>"not equal"</code>
+</li>
+<li>
+<code>alpha</code>: Significance level (required parameter)</li>
+<li>
+<code>data</code>: Data frame containing the variable</li>
+<li>
+<code>plot</code>: Whether to display diagnostic plots (default: <code>TRUE</code>)</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="example-output">Example Output<a class="anchor" aria-label="anchor" href="#example-output"></a>
+</h2>
+<p>The function returns a comprehensive list containing:</p>
+<ul>
+<li>Sample statistics (mean, SD, sample size)</li>
+<li>Test statistics (t-statistic, degrees of freedom, critical value)</li>
+<li>P-value and confidence interval</li>
+<li>Decision and interpretation</li>
+<li>Assumption check results (normality test, outlier detection)</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="additional-examples">Additional Examples<a class="anchor" aria-label="anchor" href="#additional-examples"></a>
+</h2>
+<div class="section level3">
+<h3 id="two-tailed-test">Two-Tailed Test<a class="anchor" aria-label="anchor" href="#two-tailed-test"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Test if temperature differs from 98.6°F</span></span>
+<span><span class="va">temp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  Temperature <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">98.2</span>, <span class="fl">98.6</span>, <span class="fl">97.8</span>, <span class="fl">99.1</span>, <span class="fl">98.4</span>, <span class="fl">98.7</span>, </span>
+<span>                  <span class="fl">97.9</span>, <span class="fl">98.5</span>, <span class="fl">98.3</span>, <span class="fl">98.8</span>, <span class="fl">98.1</span>, <span class="fl">98.6</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/oneMeanTTest.html">oneMeanTTest</a></span><span class="op">(</span><span class="st">"Temperature"</span>, mu <span class="op">=</span> <span class="fl">98.6</span>, ha <span class="op">=</span> <span class="st">"not equal"</span>, </span>
+<span>             alpha <span class="op">=</span> <span class="fl">0.05</span>, data <span class="op">=</span> <span class="va">temp_data</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="greater-than-test">Greater Than Test<a class="anchor" aria-label="anchor" href="#greater-than-test"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Test if scores are above 70</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">456</span><span class="op">)</span></span>
+<span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  Score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">40</span>, min <span class="op">=</span> <span class="fl">50</span>, max <span class="op">=</span> <span class="fl">95</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/oneMeanTTest.html">oneMeanTTest</a></span><span class="op">(</span><span class="st">"Score"</span>, mu <span class="op">=</span> <span class="fl">70</span>, ha <span class="op">=</span> <span class="st">"greater"</span>, </span>
+<span>             alpha <span class="op">=</span> <span class="fl">0.05</span>, data <span class="op">=</span> <span class="va">scores</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="learn-more">Learn More<a class="anchor" aria-label="anchor" href="#learn-more"></a>
+</h2>
+<ul>
+<li><a href="https://kingssibal.github.io/OneMeanDream/articles/introduction.html">Getting Started Guide</a></li>
+<li><a href="https://kingssibal.github.io/OneMeanDream/reference/index.html">Function Reference</a></li>
+<li><a href="https://github.com/KingSSIBAL/OneMeanDream/issues" class="external-link">Report Issues</a></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="authors">Authors<a class="anchor" aria-label="anchor" href="#authors"></a>
+</h2>
+<p>Developed by the STAT 181 Team: Arianna Tagulinao, Cindy Barcena, Francesca Anne Baclig, Josiah Tan, Junel Rey, Keano Pastrana, Matt Andrei Miclat, Mica Gonzales, Zan Eros Policarpio, and Reijel Agub (Maintainer)</p>
+</div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>MIT + file LICENSE</p>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -98,7 +290,12 @@ Performs one-sample t-tests using Wallace critical value approximation and Hasti
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/KingSSIBAL/OneMeanDream/actions" class="external-link"><img src="https://github.com/KingSSIBAL/OneMeanDream/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
